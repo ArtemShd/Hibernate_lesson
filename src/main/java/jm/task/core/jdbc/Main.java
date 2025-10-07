@@ -15,11 +15,9 @@ public class Main {
         users.add(new User("Egor", "Egorov", (byte) 40));
         for (User us : users) {
             userService.saveUser(us.getName(), us.getLastName(), (byte) us.getAge());
-            System.out.println("User с именем – " + us.getName() + " добавлен в БД");
         }
         List<User> usersTable = userService.getAllUsers();
         for (User us : usersTable) {
-            System.out.println(us);
         }
         userService.cleanUsersTable();
         userService.dropUsersTable();

@@ -6,7 +6,7 @@ import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class UserDaoJDBCImpl extends Util implements UserDao {
+public class UserDaoJDBCImpl  implements UserDao {
     private static final String CREATE_USERS_TABLE_SQL = "CREATE TABLE IF NOT EXISTS users(" +
             "ID BIGINT NOT NULL AUTO_INCREMENT, NAME VARCHAR(100), " +
             "LASTNAME VARCHAR(100), AGE INT, PRIMARY KEY (ID))";
@@ -21,17 +21,17 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
 
     private static final String CLEAN_USERS_TABLE_SQL = "DELETE FROM users";
 
-    private Connection connection = getConnection();
+    private Connection connection;
 
     public UserDaoJDBCImpl() {
-
+        Util util = new Util();
+        this.connection = util.getConnection();
     }
 
     @Override
     public void createUsersTable() {
         try (Statement stat = connection.createStatement()) {
             stat.executeUpdate(CREATE_USERS_TABLE_SQL);
-            System.out.println("Таблица создана");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -41,7 +41,6 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
     public void dropUsersTable() {
         try (Statement stat = connection.createStatement()) {
             stat.executeUpdate(DROP_USERS_TABLE_SQL);
-            System.out.println("Добавлено в таблицу");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -54,7 +53,6 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
             preStat.setString(2, lastName);
             preStat.setByte(3, age);
             preStat.executeUpdate();
-            System.out.println("Пользователь добавлен");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -65,7 +63,6 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
         try (PreparedStatement preStat = connection.prepareStatement(DELETE_USER_BY_ID_SQL)) {
             preStat.setLong(1, id);
             preStat.executeUpdate();
-            System.out.println("Пользователь удален");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -84,7 +81,6 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
                 user.setAge(resultSet.getByte("AGE"));
                 userList.add(user);
             }
-            System.out.println("Список пользователей");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -95,7 +91,6 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
     public void cleanUsersTable() {
         try (Statement stat = connection.createStatement()) {
             stat.executeUpdate(CLEAN_USERS_TABLE_SQL);
-            System.out.println("Таблица очищена");
         } catch (SQLException e) {
             e.printStackTrace();
         }
