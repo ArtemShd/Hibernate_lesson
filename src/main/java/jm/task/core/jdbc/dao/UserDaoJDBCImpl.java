@@ -6,27 +6,17 @@ import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class UserDaoJDBCImpl  implements UserDao {
+public class UserDaoJDBCImpl implements UserDao {
     private static final String CREATE_USERS_TABLE_SQL = "CREATE TABLE IF NOT EXISTS users(" +
             "ID BIGINT NOT NULL AUTO_INCREMENT, NAME VARCHAR(100), " +
             "LASTNAME VARCHAR(100), AGE INT, PRIMARY KEY (ID))";
-
     private static final String DROP_USERS_TABLE_SQL = "DROP TABLE IF EXISTS users";
-
     private static final String INSERT_USER_SQL = "INSERT INTO users (NAME, LASTNAME, AGE) VALUES (?, ?, ?)";
-
     private static final String DELETE_USER_BY_ID_SQL = "DELETE FROM users WHERE ID=?";
-
     private static final String SELECT_ALL_USERS_SQL = "SELECT ID, NAME, LASTNAME, AGE FROM users";
-
     private static final String CLEAN_USERS_TABLE_SQL = "DELETE FROM users";
 
-    private Connection connection;
-
-    public UserDaoJDBCImpl() {
-        Util util = new Util();
-        this.connection = util.getConnection();
-    }
+    private Connection connection = new Util().getConnection();
 
     @Override
     public void createUsersTable() {
