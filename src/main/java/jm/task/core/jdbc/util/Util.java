@@ -23,7 +23,6 @@ public class Util {
 
     private static SessionFactory sessionFactory;
 
-    //JDBC
     public Connection getConnection() {
         Connection connection = null;
         try {
@@ -33,7 +32,6 @@ public class Util {
         return connection;
     }
 
-    //Hibernate
     public SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
@@ -56,7 +54,7 @@ public class Util {
                 e.printStackTrace();
             }
         }
-            return sessionFactory;
+        return sessionFactory;
     }
 }
 
