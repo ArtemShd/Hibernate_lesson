@@ -21,7 +21,7 @@ public class Util {
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String DIALECT = "org.hibernate.dialect.MySQLDialect";
 
-    private static SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     public Connection getConnection() {
         Connection connection = null;
